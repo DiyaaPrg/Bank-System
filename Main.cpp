@@ -153,7 +153,7 @@ void PrintNoAccessMessage()
 
 }
 
-bool IsUserExisted( string username, string password, stUserInfo& User)
+bool IsValidUser( string username, string password, stUserInfo& User)
 {
     vector < stUserInfo> vUsersInfo = LoadDataFromFileToVectorForUsers();
 
@@ -161,10 +161,8 @@ bool IsUserExisted( string username, string password, stUserInfo& User)
     {
         if (user.Name == username && user.Password == password)
         {
-            {
                 User = user;
                 return true;
-            }
 
         }
     }
@@ -551,7 +549,7 @@ stUserInfo ReadUserInfo(vector <stUserInfo>& Users)
 
     if (Users.size() > 0)
     {
-        while (IsUserExisted( username, password, user))
+        while (IsValidUser( username, password, user))
         {
             cout << "\nClient with [" << username << "] already exists, ";
             ReadUserNameAndPassword(username, password);
@@ -1332,7 +1330,6 @@ void PerfromMainMenueOption(enBankOptions option)
 
 void ShowMenue()
 {
-    vector < stUserInfo> vUsersInfo = LoadDataFromFileToVectorForUsers();
     system("cls");
 
     cout << "\n=================================================\n";
@@ -1364,15 +1361,13 @@ void ShowLoginScreen()
 
 void Login()
 {
-    vector <stUserInfo> User = LoadDataFromFileToVectorForUsers();
-    vector <stClientsInfo> vClientsInfo = LoadDataFromFileToVector();
-
 
     ShowLoginScreen();
     string username, password;
+
     ReadUserNameAndPassword(username, password);
 
-    while (!IsUserExisted(username, password, user))
+    while (!IsValidUser(username, password, user))
     {
         cout << "\nInvalid username/Password!\n";
         ReadUserNameAndPassword(username, password);
